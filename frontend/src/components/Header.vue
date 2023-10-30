@@ -42,10 +42,16 @@
 <script setup>
 import login from '../components/alert/login.vue'
 import { ref } from 'vue';
+import router from '../router';
 const isMenuOpen = ref(false);
 const isModalOpen = ref(false);
 function showModal(){
-    isModalOpen.value = !isModalOpen.value;
+    if(1){
+        router.push("/myuser/information");
+    }else{
+        isModalOpen.value = !isModalOpen.value;
+    }
+   
 }
 function closeNotification(){
     isModalOpen.value = false;

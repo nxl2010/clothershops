@@ -1,5 +1,5 @@
 <template>
-   <header class=" sticky top-0 left-0 w-full bg-gray-50 text-black p-3 z-50">
+   <header class=" sticky top-0 left-0 w-full bg-teal-50 text-black p-3 z-50">
      <Header></Header>
    </header>
    <main>

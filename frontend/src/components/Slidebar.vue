@@ -1,46 +1,67 @@
 <template>
-    <div class="bg-gray-100 py-3 px-4 rounded-lg shadow-md">
-        <h2 class="text-2xl font-semibold mb-2 border-b-2 pb-2">Liên hệ</h2>
-        <div class="flex space-x-2 items-center">
-            <i class="fab fa-facebook text-blue-600 text-2xl"></i>
-            <a href="https://www.facebook.com/nxlzero" class="text-blue-600 hover:no-underline">Facebook</a>
-        </div>
-        <div class="flex space-x-2 items-center mt-2">
-            <i class="fab fa-instagram text-pink-600 text-2xl"></i>
-            <a href="https://www.instagram.com/nxlzero" class="text-pink-600 hover:no-underline">Instagram</a>
-        </div>
-        <div class="flex space-x-2 items-center mt-2">
-            <i class="fab fa-github text-gray-800 text-2xl"></i>
-            <a href="https://github.com/nxlzero" class="text-gray-800 hover:no-underline">GitHub</a>
-        </div>
-        <div class="flex space-x-2 items-center mt-2">
-            <i class="far fa-envelope text-gray-600 text-2xl  "></i>
-            <a href="mailto:xuanlamzero@example.com" class="text-gray-600 hover:no-underline">xuanlamzer@gmail.com</a>
-        </div>
-    </div>
+    <div>
+        <aside id="logo-sidebar"
+            class="top-18 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+            aria-label="Sidebar">
+            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+                <a href="https://flowbite.com/" class="flex items-center mb-5">
+                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 mr-3 sm:h-7" alt="Flowbite Logo" />
+                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Nguyễn Xuân Lâm</span>
+                </a>
+                <ul class="space-y-2 font-medium">
+                    <li>
 
-    <div class="bg-gray-100 p-4 rounded-lg shadow-md mt-4">
-        <h2 class="text-2xl font-semibold mb-2 border-b-2 pb-2">Câu nói hay</h2>
-        <p class=" font-mono italic text-neutral-500">" {{ quotes.content }}"</p>
-        <p class=" font-sans text-neutral-500 text-xs float-right">{{ quotes.author }}</p>
-    </div>
-    
-    <div class="bg-gray-100 p-4 rounded-lg shadow-md mt-4">
-        <h2 class="text-2xl font-semibold mb-2 border-b-2 pb-2">Bài viết gần đây</h2>
-        <div v-for="(post, index) in recentPosts" :key="index" class="mb-4">
-            <h3 class="text-lg font-medium">{{ post.title }}</h3>
-            <p class="text-gray-600">{{ post.date }}</p>
-        </div>
-    </div>
+                        <a href="#"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover-bg-gray-700 group">
+                            <span class="ml-3">Dashboard</span>
+                        </a>
+                    </li>
 
-    <div class="bg-gray-100 p-4 rounded-lg shadow-md mt-4">
-        <h2 class="text-2xl font-semibold mb-2 border-b-2 pb-2">HashTag</h2>
-        <div class="flex flex-wrap gap-2">
-            <span v-for="(tagName,index) in tagNames" :key="index"
-            class=" bg-gray-400 rounded-lg py-1 px-1 text-gray-100 font-medium">{{ tagName.name }}</span>
-        </div>
-    </div>
-</template>
+
+                    <li>
+                        <router-link to="/myuser/information">
+                            <div
+                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover-bg-gray-700 group">
+                                <span class="ml-3 whitespace-nowrap">Thông tin cá nhân</span>
+                            </div>
+                        </router-link>
+
+                    </li>
+                    <li>
+                        <router-link to="/myuser/changepassword">
+                            <div
+                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover-bg-gray-700 group">
+                                <span class="ml-3 whitespace-nowrap">Đổi mật khẩu</span>
+                            </div>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/myuser/information">
+                            <div
+                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover-bg-gray-700 group">
+                                <span class="ml-3 whitespace-nowrap">Đơn hàng</span>
+                            </div>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/myuser/information">
+                            <div
+                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover-bg-gray-700 group">
+                                <span class="ml-3 whitespace-nowrap">Khuyến mãi</span>
+                            </div>
+                        </router-link>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-red-300 dark:hover-bg-gray-700 group">
+                            <span class="ml-3 whitespace-nowrap">Sign Up</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+    </div></template>
 <script setup>
 import { recentPosts, quotes, tagNames, initializeData } from '../service/sidebar';
 

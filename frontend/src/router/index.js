@@ -8,6 +8,7 @@ import Logout from '../views/Logout.vue'
 import AdminLayout from '../layout/AdminLayout.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
 import Search from '../views/Search.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -20,15 +21,32 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/about/:id',
-      name: 'about',
+      path: '/myuser',
+      name: 'myuser',
       meta:{
         layout: HomeLayout
       },
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      component: () => import('../views/AboutView.vue'),
+      children: [
+        {
+        path: 'information',
+        meta:{
+          layout: HomeLayout
+        },
+        component: () => import('../components/Information.vue')
+      },
+      {
+        path: 'changepassword',
+        meta:{
+          layout: HomeLayout
+        },
+        component: () => import('../components/ChangePassword.vue')
+      },
+      
+    ]
     },
     {
       path:'/search',
@@ -63,14 +81,7 @@ const router = createRouter({
       },
       component: SignUp
     },
-    {
-      path: '/post',
-      name : 'post',
-      meta:{
-        layout: HomeLayout
-      },
-      component: ()=> import('../views/PostView.vue')
-    },
+    
     {
       path: '/admin',
       name: 'dashboard',
