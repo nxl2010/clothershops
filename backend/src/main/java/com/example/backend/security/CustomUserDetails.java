@@ -16,10 +16,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    //Khai báo các fields trong userdetails
+    //Khai bao field trong userdetail
     private Long id;
-    private String username;
+    private String userName;
     private String password;
+    private String fullName;
+    private String email;
     private Collection<? extends GrantedAuthority> authorities;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -35,17 +37,21 @@ public class CustomUserDetails implements UserDetails {
                 user.getId(),
                 user.getUserName(),
                 user.getPassword(),
+                user.getFullName(),
+                user.getEmail(),
                 authorityList
         );
     }
+
+
     @Override
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return userName;
     }
 
     @Override
@@ -68,3 +74,4 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 }
+

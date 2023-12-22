@@ -22,10 +22,10 @@
 const navigationLinks = [
     { name: 'Home' },
     { name: 'User' },
-    { name: 'Category' },
-    { name: 'Post' },
-    { name: 'TagName' },
-    { name: 'Blank' },
+    { name: 'Product' },
+    { name: '' },
+    { name: '' },
+    { name: '' },
 ];
 let activeLinkIndex = null;
 

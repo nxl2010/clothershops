@@ -2,14 +2,16 @@
 	<h2></h2>
 	<div class="container" :class="{ 'right-panel-active': isActive }" id="container">
 		<div class="form-container sign-up-container">
-			<form @submit.prevent="signup">
+			<form @submit.prevent="signUp">
 				<h3>Create Account</h3>
 				<div class="social-container">
 					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 				</div>
-				<input v-model="fullname" type="text" placeholder="Fullname">
+				<div v-if="error" class=" text-red-500">{{ error }}</div>
+
+				<input v-model="fullname" type="text" placeholder="Fullnamee">
 				<input v-model="username" type="text" placeholder="Username" />
 				<input v-model="email" type="email" placeholder="Email" />
 				<input v-model="password" type="password" placeholder="Password" />
@@ -23,7 +25,7 @@
 					<h1>Welcome Back!</h1>
 					<p>To keep connected with us please login with your personal info</p>
 					<router-link to="/login">
-						<button class="ghost" id="signIn">Sign In</button>
+						<button class="ghost" id="signin">Sign In</button>
 					</router-link>
 				</div>
 
@@ -33,8 +35,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import apiRequest from '../service/api';
-import router from '../router/index';
+import { userSignUp } from '../composable/useSignUp';
 
 const isActive = ref(true);
 const fullname = ref('');
@@ -42,29 +43,13 @@ const username = ref('');
 const email = ref('');
 const password = ref('');
 
+const {error, isPending, signup} = userSignUp();
 function toggleSign() {
   isActive.value = !isActive.value;
 }
 
-const signup = async () => {
-  try {
-    const response = await apiRequest('POST', 'http://localhost:8080/api/v1/auth/register', {
-      fullName: fullname.value,
-      email: email.value,
-      password: password.value,
-	  userName: username.value
-    });
-
-    if (response.status === 200) {
-      alert('Đăng ký thành công:', response.data);
-	  router.push('/login');
-      // Chuyển người dùng đến trang đăng nhập hoặc thực hiện hành động khác
-    } else {
-      console.error('Lỗi đăng ký:', response.data);
-    }
-  } catch (error) {
-    console.error('Lỗi:', error);
-  }
+const signUp = () => {
+	signup(username.value, email.value, fullname.value, password.value);
 };
 </script>
 <style scoped>

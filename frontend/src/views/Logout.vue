@@ -1,24 +1,29 @@
 <template>
-    <div>
-      {{ message }}
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-green-500">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center">
+      <h1 class="text-3xl font-semibold text-gray-800 mb-4">Thông báo</h1>
+      <p class="text-gray-700">{{ message }}</p>
+      <button
+        @click="redirectToHome"
+        class="mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none"
+      >
+        Trở về Trang Chủ
+      </button>
     </div>
-  </template>
+  </div>
+</template>
+
   
   <script>
   export default {
     data() {
       return {
-        message: "Logging out...",
+        message: "BYE BYE",
       };
     },
     async mounted() {
-      // Xóa token khỏi localStorage hoặc thực hiện xử lý đăng xuất khác
       localStorage.removeItem("token");
-  
-      // Đợi 30 giây trước khi chuyển hướng đến trang đăng nhập
-      await this.delay(1000); // 30000 milliseconds = 30 seconds
-  
-      // Chuyển hướng đến trang đăng nhập sau khi đợi 30 giây
+      await this.delay(1000); 
       this.$router.push("/login");
     },
     methods: {

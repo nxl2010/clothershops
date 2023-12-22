@@ -27,8 +27,11 @@ public class User {
     @Column(name = "fullname")
     private String fullName;
 
-    @Column(name = "avatar")
+    @Column(name = "avatarUrl")
     private String avatar;
+
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "email")
     private String email;

@@ -1,5 +1,4 @@
 <template>
-  
   <div class="container mx-auto p-4">
     <h1 class="text-2xl font-bold mb-4">CRUD Example</h1>
     <button @click="toggleCreateForm" class="mb-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg">
@@ -38,21 +37,30 @@
         <thead>
           <tr>
             <th class="px-2 py-3 bg-gray-100 text-left">ID</th>
-            <th class="px-2 py-3 bg-gray-100 text-left">Name</th>
-            <th class="px-2 py-3 bg-gray-100 text-left">Entry</th>
-            <th class="px-2 py-3 bg-gray-100 text-left">Description</th>
+            <th class="px-2 py-3 bg-gray-100 text-left">FullName</th>
+            <th class="px-2 py-3 bg-gray-100 text-left">UserName</th>
+            <th class="px-2 py-3 bg-gray-100 text-left">Email</th>
             <th class="px-2 py-3 bg-gray-100 text-left">Image</th>
+            <th class="px-2 py-3 bg-gray-100 text-left">PhoneNumber</th>
+            <th class="px-2 py-3 bg-gray-100 text-left">Role</th>
             <th class="px-2 py-3 bg-gray-100 text-left">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="category in categories" :key="category.id" class="border-b hover:bg-gray-100">
-            <td class="px-2 py-4">{{ category.id }}</td>
-            <td class="px-2 py-4">{{ category.name }}</td>
-            <td class="px-2 py-4">{{ category.entry }}</td>
-            <td class="px-2 py-4 max-w-lg">{{ category.decribe }}</td>
+          <tr v-for="user in users" :key="user.id" class="border-b hover:bg-gray-100">
+            <td class="px-2 py-4">{{ user.id }}</td>
+            <td class="px-2 py-4">{{ user.fullName }}</td>
+            <td class="px-2 py-4">{{ user.userName }}</td>
+            <td class="px-2 py-4">{{ user.email }}</td>
             <td class="px-2 py-4">
-              <img :src="category.image" alt="Category Image" class="w-20 h-auto">
+              <img :src="user.avatar" alt="Category Image" class="w-20 h-auto">
+            </td>
+            <td class="px-2 py-4">{{ user.phoneNumber }}</td>
+            <td class="px-2 py-4">
+              <span v-for="(role, index) in user.rolesDto" :key="index">
+                {{ role }}
+                <span v-if="index !== user.rolesDto.length - 1">, </span>
+              </span>
             </td>
             <td class="px-1 py-4 space-x-2">
               <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg">Edit</button>
@@ -62,21 +70,21 @@
         </tbody>
       </table>
     </div>
-  </div>  
+  </div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
 import apiRequest from '../../service/api.js';
 const showCreateForm = ref(false);
-const categories = ref([]);
+const users = ref([]);
 function toggleCreateForm() {
   showCreateForm.value = !showCreateForm.value;
 }
 
 const fetchCategories = async () => {
   try {
-    const response = await apiRequest('GET', 'http://localhost:8080/api/v3/category');
-    categories.value = response.data;
+    const response = await apiRequest('GET', 'http://localhost:8080/api/v2/user');
+    users.value = response.data;
   } catch (error) {
     console.error('Error fetching categories:', error);
   }

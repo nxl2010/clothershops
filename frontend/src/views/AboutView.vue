@@ -5,10 +5,6 @@
     <!-- Cột chiếm 3/4 trang -->
     <div class="col-span-3 lg:col-span-1 py-4 pl-4 pr-1">
       <Slidebar></Slidebar>
-
-    
-
-
     </div>
 
     <!-- Cột chiếm 1/4 trang là sidebar-->

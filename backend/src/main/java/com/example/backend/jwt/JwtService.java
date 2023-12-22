@@ -7,14 +7,17 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -30,21 +33,31 @@ public class JwtService {
         final Claims claims = extraAllClaims(token);
         return claimsResolver.apply(claims);
     }
-    public String generateToken(Map<String ,Object> extraClaims,
-                                UserDetails userDetails){
-        //te
-        return Jwts
-                .builder()
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        // Lấy danh sách quyền từ UserDetails
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        String roles = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        // Thêm quyền vào claims nếu danh sách quyền không rỗng
+        if (!roles.isEmpty()) {
+            extraClaims.put("roles", roles);
+        }
+
+        return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-    public String generateToken(UserDetails userDetails){
-        return  generateToken(new HashMap<>(),userDetails);
+
+    public String generateToken(UserDetails userDetails) {
+        return generateToken(new HashMap<>(), userDetails);
     }
+
     private Claims extraAllClaims(String token){
         return Jwts
                 .parserBuilder()

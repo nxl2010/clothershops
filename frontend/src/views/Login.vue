@@ -10,9 +10,10 @@
 				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
-			<span>or use your account</span>
+			<!-- <span>or use your account</span> -->
 			<input v-model="email" type="text" placeholder="Email" />
           <input v-model="password" type="password" placeholder="Password" />
+		  <div v-if="error" class=" text-red-500">{{ error }}</div>
           <a href="#">Forgot your password?</a>
           <button type="submit">Sign In</button>
 		</form>
@@ -33,38 +34,13 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
-import router from '../router/index.js';
+import { userSignIn } from '../composable/useSignIn';
+
 const email = ref('');
 const password = ref('');
-
+const {error, isPending, signin} = userSignIn();
 const signIn = () => {
-  axios
-    .post('http://localhost:8080/api/v1/auth/authenticate', {
-      userName: email.value,
-      password: password.value,
-    })
-    .then((response) => {
-      const jwt = response.data.token;
-	  const now = Date.now();
-	  const time = now + 1000*60*60*24;
-	const token ={
-		jwt :jwt,
-		exp: time
-	}
-
-      // Save the token to local storage or Vuex store for authentication
-      localStorage.setItem('token', JSON.stringify(token));
-	
-      alert('Logged in successfully!');
-	
-	  router.push('/');
-    
-    })
-    .catch((error) => {
-      alert('Invalid credentials. Please try again.');
-      console.error(error);
-    });
+ 	signin(email.value, password.value);
 };
 </script>
 <style scoped>

@@ -54,7 +54,10 @@
                     <li>
                         <a href="#"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-red-300 dark:hover-bg-gray-700 group">
-                            <span class="ml-3 whitespace-nowrap">Sign Up</span>
+                            <router-link to="/logout">
+                                <span class="ml-3 whitespace-nowrap" >Logout</span>
+                            </router-link>
+                        
                         </a>
                     </li>
                 </ul>
@@ -63,8 +66,7 @@
 
     </div></template>
 <script setup>
-import { recentPosts, quotes, tagNames, initializeData } from '../service/sidebar';
+
 
 // Gọi hàm initializeData để khởi động dữ liệu khi component được mounted
-initializeData();
 </script>

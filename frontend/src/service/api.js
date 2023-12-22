@@ -2,8 +2,7 @@
 import axios from "axios";
 const apiRequest = (method, url, data = null) => {
   const tokenJson = localStorage.getItem('token');
-  // const token = JSON.parse(tokenJson).jwt;
-  const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3ZlamF2YWEiLCJpYXQiOjE2OTM1NDgyNzEsImV4cCI6MTY5MzU0OTcxMX0.paOnTjofuSedx2T2zZFnP6D8cQdLagLb2cGG8GcskOM";
+  const token = JSON.parse(tokenJson).jwt;
   return axios({
     method: method,
     url: url,

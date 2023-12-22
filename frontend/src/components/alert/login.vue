@@ -1,4 +1,5 @@
 <template>
+   <div class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-800">
   <div class="bg-white p-4 rounded-md text-center relative">
     <i class="fa-solid fa-xmark absolute top-2 right-2 text-red-500 text-2xl"  @click="$emit('someEvent')"></i>
     <h2 class="text-2xl font-bold mb-4">Bạn chưa đăng nhập vào web</h2>
@@ -14,6 +15,7 @@
     >
       Đăng ký
     </button>
+  </div>
   </div>
 </template>
 
