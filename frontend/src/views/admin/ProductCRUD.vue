@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-4">product CRUD</h1>
+        <h1 class="text-2xl font-bold mb-4">Danh sách sản phẩm</h1>
         <div class="flex items-center justify-between mb-4">
             <button @click="toggleCreateForm"
                 class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md focus:outline-none">
@@ -25,7 +25,7 @@
                     class="text-gray-600 hover:text-gray-800 text-xl leading-none">&times;</button>
             </div>
             
-            <PreviewProduct></PreviewProduct>
+          <AddProduct></AddProduct>
             </div>
           
 

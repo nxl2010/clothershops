@@ -3,7 +3,7 @@
 	<div class="container" :class="{ 'right-panel-active': isActive }" id="container">
 		<div class="form-container sign-up-container">
 			<form @submit.prevent="signUp">
-				<h3>Create Account</h3>
+				<h3>Tạo tài khoản</h3>
 				<div class="social-container">
 					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
@@ -15,17 +15,17 @@
 				<input v-model="username" type="text" placeholder="Username" />
 				<input v-model="email" type="email" placeholder="Email" />
 				<input v-model="password" type="password" placeholder="Password" />
-				<button type="submit">Sign Up</button>
+				<button type="submit">Đăng ký</button>
 			</form>
 		</div>
 		
 		<div class="overlay-container">
 			<div class="overlay">
 				<div class="overlay-panel overlay-left">
-					<h1>Welcome Back!</h1>
-					<p>To keep connected with us please login with your personal info</p>
+					<h1></h1>
+					<p>Nếu bạn đã có tài khoản, bạn có thể đăng nhập ngay bên dưới</p>
 					<router-link to="/login">
-						<button class="ghost" id="signin">Sign In</button>
+						<button class="ghost" id="signin">Đăng nhập</button>
 					</router-link>
 				</div>
 

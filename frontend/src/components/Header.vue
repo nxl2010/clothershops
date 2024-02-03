@@ -15,7 +15,10 @@
                 <router-link to="/search">
                     <i class="fa-solid fa-magnifying-glass p-1 text-lg"></i>
                 </router-link>
-                <i class="fa-solid fa-cart-shopping p-1 text-lg"></i>
+                <router-link to="/carts"> 
+                    <i class="fa-solid fa-cart-shopping p-1 text-lg"></i>
+                </router-link>
+               
                 <i class="fa-solid fa-user p-1 text-lg" @click="showModal" ></i>
             </ul>
         </nav>

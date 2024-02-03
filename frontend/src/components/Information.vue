@@ -36,7 +36,7 @@
 
         <div class="col-span-3 lg:col-span-1 py-4">
             <div class="bg-white p-8 rounded-lg min-h-full flex flex-col items-center">
-                <img src="https://media.vov.vn/sites/default/files/styles/large/public/2023-06/1_21.jpeg.jpg" alt=""
+                <img src="" alt=""
                     class="rounded-full w-32 h-32 mx-auto mb-4">
                 <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
                     Chọn ảnh

@@ -23,36 +23,8 @@
 
         </div>
     </div>
-    <div id="about" class="relative overflow-hidden mt-16">
-        <div class="max-w-7xl mx-auto">
-            <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-                <svg class="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
-                    fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                    <polygon points="50,0 100,0 50,100 0,100"></polygon>
-                </svg>
-
-                <div class="pt-1"></div>
-
-                <main class="mt-10 mx-auto max-w-xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                    <div class="sm:text-center lg:text-left">
-                        <h2 class="my-6 text-2xl tracking-tight font-extrabold text-gray-900 sm:text-3xl md:text-4xl">
-                            About me
-                        </h2>
-
-                        <p>
-                            Xin chào! Tôi là một người đam mê công nghệ và đang sống cuộc đời của mình theo triết lý "Học suốt đời". Tôi luôn tò mò về cách mà công nghệ có thể tạo ra sự thay đổi tích cực trong cuộc sống của chúng ta. 
-                            Từ khi bắt đầu học lập trình và thiết kế web cách đây nhiều năm, tôi đã tạo ra một loạt các dự án trực tuyến để chia sẻ kiến thức của mình và kết nối với cộng đồng trên khắp thế giới.
-                        </p>
-                    </div>
-                </main>
-            </div>
-        </div>
-        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-            <img class="h-56 w-full object-cover object-top sm:h-72 md:h-96 lg:w-full lg:h-full"
-                src="https://cdn.sforum.vn/sforum/wp-content/uploads/2022/03/jisoo-dien-vien-e1647139857345.jpg" alt="">
-        </div>
-        
-    </div>
+    
+    <stories></stories>
     <stories></stories>
 
 </template>
@@ -82,8 +54,8 @@ onMounted(() => {
 .background-container {
     z-index: 1;
     width: 100%;
-    height: 100vh;
-    background-image: url('https://antimatter.vn/wp-content/uploads/2022/05/background-dep-1.jpg');
+    height: 80vh;
+    background-image: url('https://pos.nvncdn.com/a36e05-151378/bn/20240103_oopNFzjh.gif');
     background-size: cover;
     background-position: center;
 }

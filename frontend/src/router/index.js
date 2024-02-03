@@ -13,6 +13,12 @@ import NotFound from '../views/NotFound.vue'
 import Product from '../views/admin/ProductCRUD.vue'
 import SupplierCRUD from '../views/admin/SupplierCRUD.vue'
 import ProductDashBoard from '../views/admin/ProductDashBoard.vue'
+import ProductView from '../views/ProductView.vue'
+import CartView from '../views/CartView.vue'
+import PayView from '../views/PayView.vue'
+import ListCategory from '../views/ListCategory.vue'
+import ListProducts from '../views/ListProducts.vue'
+import SuggestView from '../views/SuggestView.vue'
 //Auth Guards 
 const isAuthenticated = () => {
   const tokenJson = localStorage.getItem('token');
@@ -59,6 +65,46 @@ const router = createRouter({
       },
       component: HomeView,
 
+    },
+    {
+      path: '/carts',
+      name: 'carts',
+      meta:{
+        layout: HomeLayout
+      },
+      component: CartView
+    },
+    {
+      path: '/payment',
+      name: 'pay',
+      meta:{
+        layout: HomeLayout
+      },
+      component: PayView
+    },
+    {
+      path: '/product',
+      name: 'products',
+      meta:{
+        layout: HomeLayout
+      },
+      component: ProductView
+    },
+    {
+      path: '/:category',
+      name: 'ListProducts',
+      meta: {
+        layout: HomeLayout
+      },
+      component: ListProducts
+    },
+    {
+      path: '/suggest',
+      name: 'Suggest',
+      meta: {
+        layout: HomeLayout
+      },
+      component: SuggestView
     },
     {
       path: '/myuser',
@@ -211,7 +257,7 @@ router.beforeEach((to, from, next) => {
   // Kiểm tra meta.requiresAuth để xác định xem route yêu cầu xác thực hay không
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // Nếu yêu cầu xác thực, kiểm tra xem người dùng đã đăng nhập chưa
-    if (!isAuthenticated()) {
+    if (!true) {
       // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
       next('/login')
     } else {

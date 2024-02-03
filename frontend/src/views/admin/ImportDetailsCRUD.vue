@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-4">CRUD Example</h1>
+        <h1 class="text-2xl font-bold mb-4">Danh sách nhập kho</h1>
         <button @click="toggleCreateForm" class="mb-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg">
             {{ showCreateForm ? 'Hide Form' : 'Add New Item' }}
         </button>
@@ -174,13 +174,8 @@
 
                             <div>
                                 <label for="quantity" class="block text-sm font-medium text-gray-600">Số lượng:</label>
-                                <div class="grid grid-cols-4 gap-1">
-                                    <div v-for="(sizeQuantity, index) in sizeQuantities" :key="index">
-                                        <label :for="`size_${index}`">{{ sizeQuantity.size }}</label>
-                                        <input type="number" v-model="sizeQuantity.quantity" :id="`size_${index}`"
-                                            class="mt-1 p-2 border rounded w-full" required pattern="[0-9]+" />
-                                    </div>
-                                </div>
+                                <input type="number" v-model="newProduct.quantity" id="quantity"
+                                    class="mt-1 p-2 border rounded w-full" required pattern="[0-9]+" />
                             </div>
 
                             <div>
