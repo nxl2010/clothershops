@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Data
 @AllArgsConstructor
@@ -24,14 +22,7 @@ public class OrderDetails {
     private Size size;
     @Column(name = "quantity")
     private long quantity;
-    @Column(name = "unit_price")
-    private double unitPrice;
-    @Column(name = "discount")
-    private float discount;
-    @Column(name = "total_amount")
-    private long totalAmount;
-    @Column(name = "status", length = 50)
-    private String status;
-    @Column(name = "datetime")
-    private LocalDateTime dateTime;
+    @ManyToOne
+    @JoinColumn(name = "order_id") // Use the actual foreign key column name in the database
+    private Order order;
 }

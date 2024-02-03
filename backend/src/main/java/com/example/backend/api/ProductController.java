@@ -1,8 +1,10 @@
 package com.example.backend.api;
 
 import com.example.backend.dto.request.ProductDTO;
+import com.example.backend.dto.response.ProductsOfCategory;
 import com.example.backend.service.impl.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,20 @@ public class ProductController {
             return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
         }catch (Exception e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+   //Lấy danh sách theo danh mục phân trang
+    @GetMapping("/category/{code}")
+    public ResponseEntity<Page<ProductsOfCategory>> getProductsByCategory(
+            @PathVariable String code,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "8") int size) {
+
+        try {
+            Page<ProductsOfCategory> products = productService.findOfCategory(code, page, size);
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PostMapping

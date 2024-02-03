@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -26,6 +28,10 @@ public class Products extends AbstractEnity{
     private boolean isNew;
     @Column(name = "is_featured")
     private boolean isFeatured;
+    @ElementCollection
+    @CollectionTable(name = "prices", joinColumns = @JoinColumn(name = "products_id"))
+    @Column(name = "price")
+    private List<Double> prices;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;

@@ -15,10 +15,6 @@ public class ShopExports {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
-    @JoinColumn(name = "stores_id")
-    private Stores stores;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

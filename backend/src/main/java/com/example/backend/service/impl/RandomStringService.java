@@ -1,5 +1,10 @@
 package com.example.backend.service.impl;
 
+import com.example.backend.enity.Customer;
+import com.example.backend.enity.User;
+import com.example.backend.repository.CustomerRepository;
+import com.example.backend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -18,5 +23,25 @@ public class RandomStringService {
             stringBuilder.append(randomChar);
         }
         return stringBuilder.toString();
+    }
+
+    public static class OrderDetailsService {
+    }
+
+    @Service
+    public static class CustomerService {
+        @Autowired
+        private CustomerRepository customerRepository;
+        @Autowired
+        private UserRepository userRepository;
+        @Autowired
+        private RandomStringService randomStringService;
+        public void save(String userName){
+            User user = userRepository.findByUserName(userName);
+            Customer customer = new Customer();
+            customer.setCode(randomStringService.generateRandomString(6));
+            customer.setUser(user);
+            customerRepository.save(customer);
+        }
     }
 }

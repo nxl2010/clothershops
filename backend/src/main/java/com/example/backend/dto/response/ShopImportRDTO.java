@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartResponseDTO {
-    private String productName;
-    private String size;
-    private double price;
-    private long quantity;
+public class ShopImportRDTO {
+    private String name;
+    private String userName;
+    private LocalDateTime time;
+
 }

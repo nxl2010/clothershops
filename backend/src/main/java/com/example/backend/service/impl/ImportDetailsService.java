@@ -37,8 +37,6 @@ public class ImportDetailsService implements IImportDetailsService {
 
             String productCode = std.getProductCode();
             costService.updatestandardCost(std.getPrice(),productCode);
-
-
             Map<String, Long> sizeQuantities = std.getSizeQuantities();
             for (Map.Entry<String, Long> entry : sizeQuantities.entrySet()){
                 ProductSizeQuantity productSizeQuantity = new ProductSizeQuantity();

@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class ShopImportDTO {
     private String name;
     private String userName;
-    private String storeCode;
     private String importDetailsCode;
     private LocalDateTime createAt;
 }

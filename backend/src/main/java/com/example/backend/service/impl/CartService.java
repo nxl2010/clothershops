@@ -3,15 +3,13 @@ package com.example.backend.service.impl;
 import com.example.backend.dto.request.CartDTO;
 import com.example.backend.dto.response.CartResponseDTO;
 import com.example.backend.enity.Cart;
-import com.example.backend.repository.CartRepository;
-import com.example.backend.repository.ProductRepository;
-import com.example.backend.repository.SizeRepository;
+import com.example.backend.enity.Customer;
+import com.example.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartService {
@@ -21,9 +19,14 @@ public class CartService {
     private ProductRepository productRepository;
     @Autowired
     private SizeRepository sizeRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public void save(CartDTO cartDTO) {
+    public void save(CartDTO cartDTO, String code) {
         Cart cart = new Cart();
+        cart.setCustomer(customerRepository.findByCode(code));
         cart.setProduct(productRepository.findByCode(cartDTO.getProductCode()));
         cart.setSize(sizeRepository.findByName(cartDTO.getSize()));
         cart.setQuantity(cartDTO.getQuantity());
@@ -31,32 +34,34 @@ public class CartService {
     }
 
     public List<CartResponseDTO> findAllByCustomer(String name) {
-        List<Cart> carts = cartRepository.findByCustomer_Name(name);
+        Customer customer = customerRepository.findByUser_UserName(name);
+        List<Cart> carts = cartRepository.findByCustomerCode(customer.getCode());
         List<CartResponseDTO> cartDTOS = new ArrayList<>();
         for (Cart std: carts){
             CartResponseDTO cartDTO = new CartResponseDTO();
-            cartDTO.setId(std.getId());
             cartDTO.setProductName(std.getProduct().getName());
             cartDTO.setSize(std.getSize().getName());
             cartDTO.setQuantity(std.getQuantity());
+            List<Double> prices = std.getProduct().getPrices();
+            cartDTO.setPrice(prices.get(prices.size() - 1));
             cartDTOS.add(cartDTO);
         }
         return cartDTOS;
     }
-    public List<CartResponseDTO> findById(List<Long> ids){
-       List<CartResponseDTO> cartResponseDTOS = new ArrayList<>();
-        for (Long std: ids){
-            Optional<Cart> cartOptional = cartRepository.findById(std);
-            if (cartOptional.isPresent()){
-                Cart cart = cartOptional.get();
-                CartResponseDTO cartDTO = new CartResponseDTO();
-                cartDTO.setId(cart.getId());
-                cartDTO.setProductName(cart.getProduct().getName());
-                cartDTO.setSize(cart.getSize().getName());
-                cartDTO.setQuantity(cart.getQuantity());
-               cartResponseDTOS.add(cartDTO);
-            }
-        }
-        return cartResponseDTOS;
-    }
+//    public List<CartResponseDTO> findById(List<Long> ids){
+//       List<CartResponseDTO> cartResponseDTOS = new ArrayList<>();
+//        for (Long std: ids){
+//            Optional<Cart> cartOptional = cartRepository.findById(std);
+//            if (cartOptional.isPresent()){
+//                Cart cart = cartOptional.get();
+//                CartResponseDTO cartDTO = new CartResponseDTO();
+//                cartDTO.setProductName(cart.getProduct().getName());
+//                cartDTO.setSize(cart.getSize().getName());
+//                cartDTO.setQuantity(cart.getQuantity());
+//                cartDTO.setPrice(cart.getProduct().getPrices().get(0));
+//               cartResponseDTOS.add(cartDTO);
+//            }
+//        }
+//        return cartResponseDTOS;
+//    }
 }

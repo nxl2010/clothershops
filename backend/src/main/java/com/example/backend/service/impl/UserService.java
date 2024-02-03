@@ -66,7 +66,6 @@ public class UserService implements IUserService {
         user.setFullName(newUser.getFullName());
         user.setEmail(newUser.getEmail());
         user.setAvatar(newUser.getAvatar());
-        user.setAddress(newUser.getAddress());
         user.setPhoneNumber(newUser.getPhoneNumber());
         return user;
     }

@@ -2,12 +2,13 @@ package com.example.backend.enity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "orders")
@@ -24,21 +25,30 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private User user;
 
-    @Column(name = "order_date", nullable = false)
+    @Column(name = "order_date")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime orderDate;
 
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private OrderStatus status;
+    @Column(name = "discount")
+    private double discount;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private OrderShip shipStatus;
 
-    @Column(name = "total_amount", nullable = false)
+    @Column(name = "total_amount")
     private long totalAmount;
 
-    @Column(name = "payment_status", nullable = false)
+    @Column(name = "payment_status")
     private String paymentStatus;
 
-    @Column(name = "shipping_address", nullable = false)
+    @Column(name = "shipping_address")
     private String shippingAddress;
 
     @Column(name = "billing_address", nullable = false)
@@ -50,7 +60,5 @@ public class Order {
     @Column(name = "shipping_method", nullable = false)
     private String shippingMethod;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderDetails> orderItems;
 
 }

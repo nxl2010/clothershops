@@ -8,7 +8,9 @@ import com.example.backend.jwt.JwtService;
 import com.example.backend.repository.RoleRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.security.CustomUserDetails;
+import com.example.backend.service.impl.RandomStringService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +30,8 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    @Autowired
+    private RandomStringService.CustomerService customerService;
     public AuthenticationResponse register(RegisterRequest request){
         User user = new User();
         User ifUser = userRepository.findByUserName(request.getUserName());
@@ -45,6 +49,7 @@ public class AuthenticationService {
         user.setEmail(request.getEmail());
         user.setRoles( Collections.singleton(roleUser));
         userRepository.save(user);
+        customerService.save(request.getUserName());
         //build JWT từ user
         UserDetails customUserDetails = CustomUserDetails.mapUserToUserDetail(user);
         var jwtToken = jwtService.generateToken(customUserDetails);

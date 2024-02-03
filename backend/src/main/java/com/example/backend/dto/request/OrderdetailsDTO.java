@@ -1,15 +1,14 @@
-package com.example.backend.dto.response;
+package com.example.backend.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class CartResponseDTO {
-    private String productName;
+@AllArgsConstructor
+public class OrderdetailsDTO {
+    private String productCode;
     private String size;
-    private double price;
     private long quantity;
 }
