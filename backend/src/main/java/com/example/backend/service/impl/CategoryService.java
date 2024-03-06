@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService implements ICategoryService {
@@ -40,6 +41,16 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void delete(Long id) {
+
+    }
+
+    public String findByCode(String code) {
+        Optional<Category>  optionalCategory = categoryRepository.findByCode(code);
+        if (optionalCategory.isPresent()){
+            return optionalCategory.get().getName();
+        }else {
+            throw new CategoryNotFoundException(code);
+        }
 
     }
 }

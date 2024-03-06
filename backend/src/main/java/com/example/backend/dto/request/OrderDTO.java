@@ -10,10 +10,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO {
-    private String shippingAddress;
-    private String billingAddress;
-    private String shippingMethod;
-    private String paymentMethod;
+    private String shipCode;
+    private boolean paymentMethod;
+    private boolean isPaid;
     private double discount;
     private long totalAmount;
     private List<OrderdetailsDTO> orderdetailsDTOS;

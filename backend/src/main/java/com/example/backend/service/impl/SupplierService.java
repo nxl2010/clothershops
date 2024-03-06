@@ -1,6 +1,7 @@
 package com.example.backend.service.impl;
 
 import com.example.backend.dto.request.SupplierDTO;
+import com.example.backend.dto.response.SupplierRDTO;
 import com.example.backend.enity.Supplier;
 import com.example.backend.exception.SupplierNotFoundException;
 import com.example.backend.mapstructs.SupplierMapper;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +26,22 @@ public class SupplierService implements ISupplierService {
     @Autowired
     private RandomStringService randomStringService;
     @Override
-    public List<SupplierDTO> getAll() {
+    public List<SupplierRDTO> getAll() {
         List<Supplier> suppliers = supplierRepository.findAll();
         if (suppliers.size() == 0){
             throw new SupplierNotFoundException("Chưa có giá trị nào");
         }
-        return SupplierMapper.INSTANCE.supplierDTOsToSuppliers(suppliers);
+        List<SupplierRDTO> supplierRDTOS = new ArrayList<>();
+        for (Supplier std : suppliers){
+            SupplierRDTO supplierRDTO = new SupplierRDTO();
+            supplierRDTO.setName(std.getName());
+            supplierRDTO.setNote(std.getNote());
+            supplierRDTO.setStatus(std.isStatus());
+            supplierRDTO.setCode(std.getCode());
+            supplierRDTO.setEmail(std.getEmail());
+            supplierRDTOS.add(supplierRDTO);
+        }
+        return supplierRDTOS;
     }
 
     @Override

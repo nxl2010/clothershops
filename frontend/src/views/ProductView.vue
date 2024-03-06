@@ -3,18 +3,10 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-20 bg-white rounded-xl p-3">
             <div class="grid grid-cols-1 md:grid-cols-8 gap-2">
                 <div class="md:col-span-1">
-                    <div class="md:col-span-1">
-                        <img src="https://pos.nvncdn.com/a36e05-151378/ps/20231213_iAl9k6EuKP.jpeg" alt="Thumbnail"
-                            class="w-full h-auto mb-2 rounded-lg shadow-lg" />
-                        <img src="https://pos.nvncdn.com/a36e05-151378/ps/20231213_ut0YOGicZV.jpeg" alt="Thumbnail"
-                            class="w-full h-auto mb-2 rounded-lg shadow-lg" />
-                        <img src="https://pos.nvncdn.com/a36e05-151378/ps/20231213_MIYfKj2HUR.jpeg" alt="Thumbnail"
-                            class="w-full h-auto mb-2 rounded-lg shadow-lg" />
-                        <!-- Thêm các ảnh khác nếu cần -->
-                    </div>
+                   
                 </div>
                 <div class="md:col-span-7">
-                    <img src="https://pos.nvncdn.com/a36e05-151378/ps/20231213_iAl9k6EuKP.jpeg" alt="Product Image"
+                    <img :src="products.url" alt="Product Image"
                         class="w-full h-auto rounded-lg shadow-lg" />
                 </div>
             </div>
@@ -23,77 +15,27 @@
 
             <!-- Phần thông tin sản phẩm -->
             <div>
-                <h1 class="text-2xl font-bold mb-2">Áo Sơ Mi Bamboo NX25</h1>
+                <h1 class="text-2xl font-bold mb-2">{{ products.name }}</h1>
                 <p class="text-gray-600 mb-2">Mã sản phẩm: NX12</p>
-                <p class="text-gray-600 mb-2">Số lượng còn hàng: 290</p>
+                <p class="text-gray-600 mb-2">Số lượng còn hàng: {{ products.totalQuantity }}</p>
                 <hr />
-                <p class="text-gray-700 text-3xl mt-4 mb-2">Giá: 199000</p>
+                <p class="text-gray-700 text-3xl mt-4 mb-2">Giá: {{ products.price }} đ</p>
 
                 <!-- Chọn size -->
                 <div class="mb-2">
-    <label for="size" class="block text-sm font-medium text-gray-600">Chọn size:</label>
-    <div class="flex items-center space-x-2">
-      <input
-        type="radio"
-        id="size-s"
-        name="size"
-        value="S"
-        class="hidden"
-        :checked="isSelectedSize('S')"
-        @change="selectSize('S')"
-      />
-      <label for="size-s" class="radio-label cursor-pointer">
-        <input type="checkbox" :checked="isSelectedSize('S')" class="hidden" />
-        <span :class="{ 'bg-blue-500': isSelectedSize('S') }" class="radio-button"></span>
-        S
-      </label>
-
-      <input
-        type="radio"
-        id="size-m"
-        name="size"
-        value="M"
-        class="hidden"
-        :checked="isSelectedSize('M')"
-        @change="selectSize('M')"
-      />
-      <label for="size-m" class="radio-label cursor-pointer">
-        <input type="checkbox" :checked="isSelectedSize('M')" class="hidden" />
-        <span :class="{ 'bg-blue-500': isSelectedSize('M') }" class="radio-button"></span>
-        M
-      </label>
-
-      <input
-        type="radio"
-        id="size-l"
-        name="size"
-        value="L"
-        class="hidden"
-        :checked="isSelectedSize('L')"
-        @change="selectSize('L')"
-      />
-      <label for="size-l" class="radio-label cursor-pointer">
-        <input type="checkbox" :checked="isSelectedSize('L')" class="hidden" />
-        <span :class="{ 'bg-blue-500': isSelectedSize('L') }" class="radio-button"></span>
-        L
-      </label>
-
-      <input
-        type="radio"
-        id="size-xl"
-        name="size"
-        value="XL"
-        class="hidden"
-        :checked="isSelectedSize('XL')"
-        @change="selectSize('XL')"
-      />
-      <label for="size-xl" class="radio-label cursor-pointer">
-        <input type="checkbox" :checked="isSelectedSize('XL')" class="hidden" />
-        <span :class="{ 'bg-blue-500': isSelectedSize('XL') }" class="radio-button"></span>
-        XL
-      </label>
-    </div>
-  </div>
+                    <label for="size" class="block text-sm font-medium text-gray-600">Chọn size:</label>
+                    <div class="flex items-center space-x-2">
+                        <template v-for="(size, index) in products.sizes" :key="index">
+                            <input type="radio" :id="`size-${index}`" name="size" :value="size" class="hidden"
+                                :checked="isSelectedSize(size)" @change="selectSize(size)" />
+                            <label :for="`size-${index}`" class="radio-label cursor-pointer">
+                                <input type="checkbox" :checked="isSelectedSize(size)" class="hidden" />
+                                <span :class="{ 'bg-blue-500': isSelectedSize(size) }" class="radio-button"></span>
+                                {{ size }}
+                            </label>
+                        </template>
+                    </div>
+                </div>
 
 
                 <!-- Chọn số lượng -->
@@ -103,7 +45,7 @@
                         <button type="button" class="border border-gray-300 rounded-md px-2" @click="decrementQuantity">
                             -
                         </button>
-                        <input type="number" id="quantity" name="quantity" value="1"
+                        <input type="number" id="quantity" name="quantity" v-model="quantity"
                             class="border border-gray-300 rounded-md p-2" />
                         <button type="button" class="border border-gray-300 rounded-md px-2" @click="incrementQuantity">
                             +
@@ -118,7 +60,7 @@
                         Thêm vào giỏ hàng
                     </button>
 
-                    <button
+                    <button @click="addToBuy"
                         class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-300">
                         Mua ngay
                     </button>
@@ -156,17 +98,40 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watchEffect } from 'vue';
 import ProductRecomen from '../components/ProductRecomen.vue';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import apiRequest from '../service/api';
+import { useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
+const router = useRouter();
+const productCode = route.params.code;
 const activeTab = ref('details');
-const quantity = ref(1);
 
+const showDetails = () => {
+    activeTab.value = 'details';
+};
+
+const showReviews = () => {
+    activeTab.value = 'reviews';
+};
+
+const products = ref([]);
+const quantity = ref(1);
 const selectedSize = ref(null);
 
-// Thêm hàm isSelectedSize vào setup
+const fetchProducts = async (codeProduct) => {
+    try {
+        console.log(codeProduct);
+        const response = await apiRequest('GET', `http://localhost:8080/api/v2/product/detailproduct/${codeProduct}`);
+        products.value = response.data;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
+};
+
 const isSelectedSize = (size) => {
     return selectedSize.value === size;
 };
@@ -184,14 +149,40 @@ const incrementQuantity = () => {
     quantity.value += 1;
 };
 
-const showDetails = () => {
-    activeTab.value = 'details';
+//thêm giỏ hàng
+const username = ref("username");
+const fetchUsername = async () => {
+    try {
+        const response = await apiRequest('GET', 'http://localhost:8080/api/v2/user/getusername');
+        username.value = response.data;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
 };
+const getProductToCart = async (username) => {
 
-const showReviews = () => {
-    activeTab.value = 'reviews';
+    try {
+        const response = await apiRequest('POST', `http://localhost:8080/api/v2/cart?username=${username}`, {
+            "productCode": productCode,
+            "size": selectedSize.value,
+            "quantity": quantity.value
+        });
+
+        if (response.status === 200) {
+            console.log('product added:', response.data);
+
+            toast.success(`Thêm vào giỏ hàng thành công - Size: ${selectedSize.value}, Số lượng: ${quantity.value}`);
+        } else {
+            console.error('Failed to add category. Status:', response.status);
+        }
+    } catch (error) {
+        console.error('Error adding category:', error);
+    }
+
+    // Thực hiện thêm vào giỏ hàng và hiển thị thông báo thành công
+    // Sử dụng toast.success để hiển thị thông báo thành công
+
 };
-
 const addToCart = () => {
     if (!selectedSize.value) {
         toast.error('Vui lòng chọn kích thước.');
@@ -202,18 +193,47 @@ const addToCart = () => {
         toast.error('Vui lòng chọn số lượng hợp lệ.');
         return;
     }
+    getProductToCart(username.value);
+}
+const addToBuy = () => {
+    if (!selectedSize.value) {
+        toast.error('Vui lòng chọn kích thước.');
+        return;
+    }
 
-    // Thực hiện thêm vào giỏ hàng và hiển thị thông báo thành công
-    // Sử dụng toast.success để hiển thị thông báo thành công
-    toast.success(`Thêm vào giỏ hàng thành công - Size: ${selectedSize.value}, Số lượng: ${quantity.value}`);
-};
+    if (quantity.value <= 0) {
+        toast.error('Vui lòng chọn số lượng hợp lệ.');
+        return;
+    }
+    const existingItems = [];
+
+    // Thêm một mục mới vào mảng
+    existingItems.push({
+        "name": products.value.name,
+        "image": products.value.url,
+        "productCode": productCode,
+        "size": selectedSize.value,
+        "quantity": quantity.value,
+        "selected": true,
+        "price": products.value.price
+    });
+
+    // Lưu lại mảng đã cập nhật vào localStorage
+    localStorage.setItem('selectedItems', JSON.stringify(existingItems));
+    // Chuyển hướng đến trang thanh toán
+    router.push('/payment');
+}
+onMounted(() => {
+    fetchUsername();
+    fetchProducts(productCode);
+});
 </script>
 <style scoped>
 .radio-label {
-  @apply cursor-pointer border border-gray-300 rounded-md p-1 text-sm flex items-center;
+    @apply cursor-pointer border border-gray-300 rounded-md p-1 text-sm flex items-center;
 }
 
 .radio-button {
-  @apply w-4 h-4 mr-1 border border-gray-300 rounded-full;
+    @apply w-4 h-4 mr-1 border border-gray-300 rounded-full;
 }
 </style>

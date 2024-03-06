@@ -4,9 +4,9 @@
         <nav class="hidden md:block">
             <ul class="flex space-x-12">
                 <li><a href="http://localhost:5173/" class="hover:text-gray-300 font-medium text-sm">Trang chủ</a></li>
-                <li><a href="http://localhost:5173/about/Cooking" class="hover:text-gray-300 font-medium text-sm">Sản phẩm</a></li>
-                <li><a href="http://localhost:5173/about/Hust" class="hover:text-gray-300 font-medium text-sm">Thử đồ</a></li>
-                <li><a href="http://localhost:5173/about/Code" class="hover:text-gray-300 font-medium text-sm">Khuyến mãi</a></li>
+                <li><a href="http://localhost:5173/products/nw2B7" class="hover:text-gray-300 font-medium text-sm">Sản phẩm</a></li>
+                <li><a href="http://localhost:5173/suggest" class="hover:text-gray-300 font-medium text-sm">Thử đồ</a></li>
+                <li><a href="http://localhost:5173/" class="hover:text-gray-300 font-medium text-sm">Khuyến mãi</a></li>
                 <!-- <li><a href="http://localhost:5173/about/Life" class="hover:text-gray-300 font-medium text-sm">Life</a></li> -->
             </ul>
         </nav>
@@ -24,8 +24,8 @@
         </nav>
         <nav class="md:hidden" :class="{ 'block': isMenuOpen, 'hidden': !isMenuOpen }">
             <ul class="flex flex-col space-y-2 text-center">
-                <li><a href="http://localhost:5173/about/" class="hover:text-gray-300 font-medium text-sm">Home</a></li>
-                <li><a href="http://localhost:5173/about/Cooking" class="hover:text-gray-300 font-medium text-sm">Cook</a></li>
+                <li><a href="http://localhost:5173/" class="hover:text-gray-300 font-medium text-sm">Home</a></li>
+                <li><a href="http://localhost:5173/" class="hover:text-gray-300 font-medium text-sm">Cook</a></li>
                 <li><a href="http://localhost:5173/about/Hust" class="hover:text-gray-300 font-medium text-sm">Hust</a></li>
                 <li><a href="http://localhost:5173/about/Code" class="hover:text-gray-300 font-medium text-sm">Code</a></li>
                 <li><a href="http://localhost:5173/about/Life" class="hover:text-gray-300 font-medium text-sm">Life</a></li>

@@ -26,7 +26,8 @@ public class CartService {
 
     public void save(CartDTO cartDTO, String code) {
         Cart cart = new Cart();
-        cart.setCustomer(customerRepository.findByCode(code));
+        Customer customer = customerRepository.findByUser_UserName(code);
+        cart.setCustomer(customer);
         cart.setProduct(productRepository.findByCode(cartDTO.getProductCode()));
         cart.setSize(sizeRepository.findByName(cartDTO.getSize()));
         cart.setQuantity(cartDTO.getQuantity());
@@ -39,14 +40,19 @@ public class CartService {
         List<CartResponseDTO> cartDTOS = new ArrayList<>();
         for (Cart std: carts){
             CartResponseDTO cartDTO = new CartResponseDTO();
+            cartDTO.setId(std.getId());
             cartDTO.setProductName(std.getProduct().getName());
             cartDTO.setSize(std.getSize().getName());
             cartDTO.setQuantity(std.getQuantity());
-            List<Double> prices = std.getProduct().getPrices();
+            List<Long> prices = std.getProduct().getPrices();
             cartDTO.setPrice(prices.get(prices.size() - 1));
             cartDTOS.add(cartDTO);
         }
         return cartDTOS;
+    }
+
+    public void deleteCart(Long id) {
+        cartRepository.deleteById(id);
     }
 //    public List<CartResponseDTO> findById(List<Long> ids){
 //       List<CartResponseDTO> cartResponseDTOS = new ArrayList<>();

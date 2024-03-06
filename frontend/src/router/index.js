@@ -19,6 +19,7 @@ import PayView from '../views/PayView.vue'
 import ListCategory from '../views/ListCategory.vue'
 import ListProducts from '../views/ListProducts.vue'
 import SuggestView from '../views/SuggestView.vue'
+
 //Auth Guards 
 const isAuthenticated = () => {
   const tokenJson = localStorage.getItem('token');
@@ -83,15 +84,31 @@ const router = createRouter({
       component: PayView
     },
     {
-      path: '/product',
-      name: 'products',
+      path: '/uploadimage',
+      name: 'upload',
+      meta:{
+        layout: HomeLayout
+      },
+      component: () => import('../components/uploadimage.vue')
+    },
+    {
+      path: '/vnpay',
+      name: 'vnpay',
+      meta:{
+        layout: HomeLayout
+      },
+      component: () => import('../components/vnpay.vue')
+    },
+    {
+      path: '/product/:code',
+      name: 'detailproduct',
       meta:{
         layout: HomeLayout
       },
       component: ProductView
     },
     {
-      path: '/:category',
+      path: '/products/:category',
       name: 'ListProducts',
       meta: {
         layout: HomeLayout
@@ -106,6 +123,15 @@ const router = createRouter({
       },
       component: SuggestView
     },
+    {
+      path: '/choesesuggest',
+      name: 'ChoeseSuggest',
+      meta: {
+        layout: HomeLayout
+      },
+      component:  () => import('../views/ChoeseSuggestView.vue'),
+    },
+
     {
       path: '/myuser',
       name: 'myuser',
@@ -123,12 +149,27 @@ const router = createRouter({
           component: () => import('../components/Information.vue')
         },
         {
+          path: 'shipinformation',
+          meta: {
+            layout: HomeLayout
+          },
+          component: () => import('../components/ShipInformation.vue')
+        },
+        {
           path: 'changepassword',
           meta: {
             layout: HomeLayout
           },
           component: () => import('../components/ChangePassword.vue')
         },
+        {
+          path: 'orders',
+          name: 'orders',
+          meta: {
+            layout: HomeLayout
+          },
+          component: () => import('../components/MyOrder.vue')
+        }
 
       ]
     },
@@ -269,14 +310,14 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-router.beforeEach((to, from, next) => {
-  if (to.matched.length === 0) {
-    // Không có route khớp với đường dẫn, chuyển hướng đến trang Not Found
-    next({ path: '/notfound' })
-  } else {
-    // Có route khớp, tiếp tục điều hướng bình thường
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.length === 0) {
+//     // Không có route khớp với đường dẫn, chuyển hướng đến trang Not Found
+//     next({ path: '/notfound' })
+//   } else {
+//     // Có route khớp, tiếp tục điều hướng bình thường
+//     next()
+//   }
+// })
 
 export default router

@@ -1,6 +1,7 @@
 package com.example.backend.api;
 
 import com.example.backend.dto.request.OrderdetailsDTO;
+import com.example.backend.enity.Order;
 import com.example.backend.service.impl.OrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,8 @@ public class OrderDetailsController {
     private OrderDetailsService orderDetailsService;
     @PostMapping
     public ResponseEntity<?> addOrderDetails(@RequestBody OrderdetailsDTO orderdetailsDTO){
-            orderDetailsService.save(orderDetailsService);
+           Order order = new Order();
+            orderDetailsService.save(orderdetailsDTO, order);
             return ResponseEntity.ok("OK");
     }
 

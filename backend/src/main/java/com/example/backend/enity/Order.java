@@ -22,6 +22,9 @@ public class Order {
     @Column(name = "code")
     private String code;
 
+    @Column(name = "name")
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
@@ -36,6 +39,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private OrderStatus status;
+
     @Column(name = "discount")
     private double discount;
     @Enumerated(EnumType.STRING)
@@ -45,20 +49,17 @@ public class Order {
     @Column(name = "total_amount")
     private long totalAmount;
 
-    @Column(name = "payment_status")
-    private String paymentStatus;
+    @Column(name = "customer_name")
+    private String customer_name;
+
+    @Column(name = "sdt")
+    private String sdt;
 
     @Column(name = "shipping_address")
     private String shippingAddress;
 
-    @Column(name = "billing_address", nullable = false)
-    private String billingAddress;
-
     @Column(name = "payment_method", nullable = false)
-    private String paymentMethod;
-
-    @Column(name = "shipping_method", nullable = false)
-    private String shippingMethod;
+    private boolean paymentMethod;
 
 
 }

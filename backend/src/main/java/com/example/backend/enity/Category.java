@@ -16,6 +16,8 @@ public class Category extends AbstractEnity{
     private Long id;
     @Column(name = "name")
     private String name;
+    @Column(name = "nav_name")
+    private String navName;
     @Column(name = "code")
     private String code;
 

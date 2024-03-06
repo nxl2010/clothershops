@@ -28,18 +28,22 @@
                     <h2 class="text-2xl font-bold mb-4">Upload ảnh</h2>
                     <p>Bạn có thể đăng ảnh chứa trang phục của bạn dưới đây.</p>
                     <p>- Đảm bảo chất lượng ảnh tốt để có kết quả tốt nhất.</p>
-                    <p>- Số lượng có thể phát hiện từ 1-2 sản phẩm</p>
-
+                    <p>- Hình ảnh sản phẩm không bị chèn lên nhau</p>
                     <form @submit.prevent="uploadImage" enctype="multipart/form-data">
                         <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Chọn ảnh</label>
-                        <input type="file" name="image" accept="image/*"
+                        <input type="file" id="image" name="image" accept="image/*" @change="handleFileChange"
                             class="w-full py-2 px-3 border rounded focus:outline-none focus:ring focus:border-blue-300 mb-4">
 
                         <button type="submit"
                             class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
                             Đăng ảnh
                         </button>
+                      
                     </form>
+                    <button
+                            class="ml-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
+                            <i class="fa-solid fa-camera"></i>
+                        </button>
                 </div>
 
 
@@ -60,16 +64,16 @@
                     </div>
                 </div>
                 <!-- Hiển thị kết quả sau khi xử lý xong -->
-                <div v-if="result">
+                <div v-if="results.length !=0">
                     <div class="text-center">
                         <h2 class="text-3xl font-bold mb-4 text-blue-500">Kết quả</h2>
-                        <p class="text-lg mb-2">Hệ thống đã phát hiện {{ result.length }} sản phẩm trong ảnh của bạn</p>
+                        <p class="text-lg mb-2">Hệ thống đã phát hiện {{ results.length }} sản phẩm trong ảnh của bạn</p>
                         <p class="mb-4">Vui lòng chọn một ảnh để nhận các gợi ý</p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            <div v-for="image in result" :key="image" class="bg-white p-4 rounded-md shadow-md">
-                                <img :src="image" alt="Result Image" class="w-full h-32 object-cover rounded-md mb-2">
-                                <button @click="selectImage(image)"
+                            <div v-for="result in results" :key="result.url" class="bg-white p-4 rounded-md shadow-md">
+                                <img :src="result.url" alt="Result Image" class="w-full h-32 object-cover rounded-md mb-2">
+                                <button @click="selectImage(result.className, result.url)"
                                     class="bg-blue-500 text-white py-1 px-2 rounded-full hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
                                     Chọn ảnh
                                 </button>
@@ -87,86 +91,50 @@
   
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import ProductRecomen from '../components/ProductRecomen.vue';
-import { useRouter } from 'vue-router';
 
-const selectedImage = ref('');
+import { useRouter } from 'vue-router';
+import router from '../router';
+import axios from 'axios';
+const selectedFile = ref(null);
+const handleFileChange = (event) => {
+    selectedFile.value = event.target.files[0];
+};
 const showForm = ref(true);
 const loading = ref(false);
 const result = ref(null);
+const results = ref([]);
 const uploadImage = async () => {
     // Hiển thị loading
     loading.value = true;
     showForm.value = false;
 
-    // Giả lập việc upload ảnh và nhận kết quả từ server
     try {
-        // Giả lập 2 đường link ảnh trả về từ server
-        const fakeImageLinks = [
-            'https://drive.google.com/file/d/1KBA9peTNe8_T_7H2EoxTJpkptAZ6-TDX/view?usp=sharing',
-         
-        ];
+        const formData = new FormData();
+        formData.append('file', selectedFile.value);
 
-        // Giả lập delay để thấy rõ loading
+        const response = await axios.post('http://localhost:5000/dectect', formData);
+        const imageLinks = response.data.filename.map(item => item.url);
+        results.value = response.data.filename;
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        // Ẩn loading và hiển thị kết quả
         loading.value = false;
-        result.value = fakeImageLinks;
+        result.value = imageLinks;
     } catch (error) {
         console.error('Error uploading image:', error);
-        // Xử lý lỗi nếu có
+       
     }
 };
 
+const selectImage = (classname, url) => {
+    const name = encodeURIComponent(classname); 
+    localStorage.setItem('selectedUrl', url);
+    router.push(`/choesesuggest?name=${name}`);
+};
 const categories = ref([
 
 ]);
-const router = useRouter();
-const cartItems = ref([
-
-]);
-
-const updateTotals = () => {
-    selectedItems.value = cartItems.value.filter(item => item.selected);
-    selectedTotalItems.value = selectedItems.value.reduce((total, item) => total + item.quantity, 0);
-    selectedTotalPrice.value = selectedItems.value.reduce((total, item) => total + item.quantity * parseFloat(item.price.replace('$', '')), 0);
-};
-
-const removeFromCart = (itemId) => {
-    cartItems.value = cartItems.value.filter(item => item.id !== itemId);
-    updateTotals();
-};
-
-const incrementQuantity = (item) => {
-    item.quantity += 1;
-    updateTotals();
-};
-
-const decrementQuantity = (item) => {
-    if (item.quantity > 1) {
-        item.quantity -= 1;
-        updateTotals();
-    }
-};
 
 
-const selectedItems = ref([]);
-const selectedTotalPrice = ref(0);
-const selectedTotalItems = ref(0);
-onMounted(() => {
-    updateTotals();
-});
-const checkout = () => {
-    // Lưu danh sách sản phẩm được chọn vào localStorage
-    localStorage.setItem('selectedItems', JSON.stringify(selectedItems.value));
-
-    // Chuyển hướng đến trang thanh toán
-    router.push('/payment');
-};
-watch(cartItems, () => {
-    updateTotals();
-});
 </script>
   
 <style>

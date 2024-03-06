@@ -39,7 +39,7 @@ public class AuthenticationService {
             throw new DuplicateUsernameException("Đã tồn ta người dùng");
         }
         //Lấy role trong database
-        Role roleUser = roleRepository.findByName(RoleName.ROLE_MANGER)
+        Role roleUser = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy vai trò ROLE_USER"));
 
         //thêm user từ request

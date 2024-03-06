@@ -20,7 +20,5 @@ public class ExportDetails {
     @ManyToOne
     @JoinColumn(name = "size_id")
     private Size size;
-    @ManyToOne
-    @JoinColumn(name = "import_id")
-    private ShopImports shopImports;
+
 }

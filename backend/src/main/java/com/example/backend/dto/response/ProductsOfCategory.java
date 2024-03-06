@@ -10,5 +10,7 @@ import lombok.NoArgsConstructor;
 public class ProductsOfCategory {
     private String name;
     private String url;
-    private double price;
+    private String afterUrl;
+    private long price;
+    private String code;
 }

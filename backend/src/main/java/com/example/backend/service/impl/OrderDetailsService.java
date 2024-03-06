@@ -26,6 +26,7 @@ public class OrderDetailsService {
         orderDetails.setSize(sizeRepository.findByName(orderdetailsDTO.getSize()));
         orderDetails.setProduct(productRepository.findByCode(orderdetailsDTO.getProductCode()));
         orderDetails.setQuantity(orderdetailsDTO.getQuantity());
+        orderDetails.setPrice(orderdetailsDTO.getPrice());
         orderDetails.setOrder(order);
         orderDetailsRepository.save(orderDetails);
     }

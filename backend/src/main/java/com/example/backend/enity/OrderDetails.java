@@ -22,6 +22,8 @@ public class OrderDetails {
     private Size size;
     @Column(name = "quantity")
     private long quantity;
+    @Column(name = "price")
+    private double price;
     @ManyToOne
     @JoinColumn(name = "order_id") // Use the actual foreign key column name in the database
     private Order order;

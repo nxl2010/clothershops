@@ -14,4 +14,7 @@ public interface ProductRepository extends JpaRepository<Products, Long> {
     Products findByCode(String code);
     List<Products> findByCategoryCode(String code);
     Page<Products> findByCategoryCode(String categoryCode, Pageable pageable);
+    List<Products> findByCategoryCodeAndColor(String code, String color, Pageable pageable);
+    long countByCategoryCode(String code);
+
 }

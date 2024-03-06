@@ -25,6 +25,7 @@ public class CategoryController {
             return new ResponseEntity<>(categories, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+
         }
 
     }
@@ -32,5 +33,16 @@ public class CategoryController {
     public ResponseEntity<?> addCategory(@RequestBody CategoryDTO name){
         categoryService.save(name);
         return new ResponseEntity<>(name, HttpStatus.OK);
+    }
+    @GetMapping("/{code}")
+    public ResponseEntity<?> findByCode(@PathVariable    String code){
+        try{
+            String name = categoryService.findByCode(code);
+            return new ResponseEntity<>(name, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+
+        }
+
     }
 }

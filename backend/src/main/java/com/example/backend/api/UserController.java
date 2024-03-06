@@ -36,6 +36,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Chưa đăng nhập");
         }
     }
+    @GetMapping("/getusername")
+    public ResponseEntity<?> getusername(Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            return ResponseEntity.status(HttpStatus.OK).body(username);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Chưa đăng nhập");
+        }
+    }
     @PutMapping("/myuser")
     public ResponseEntity<User> updateMyUser(Principal principal, @RequestBody MyUserDTO newUser) {
         User updatedUser = userService.updateMyUser(principal.getName(), newUser);
